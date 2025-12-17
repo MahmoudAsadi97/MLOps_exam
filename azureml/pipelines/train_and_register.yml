@@ -1,0 +1,25 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+display_name: got-train-and-register
+experiment_name: MLOps_exam
+
+jobs:
+  train:
+    type: command
+    component: azureml:got_train_dt_native:1
+    compute: azureml:cpu-cluster
+    inputs:
+      train_ready:
+        type: mltable
+        path: azureml:azureml_775b0116-21ae-4427-8fa7-a4a7eadb290e_output_data_out_train:1
+      test_ready:
+        type: mltable
+        path: azureml:azureml_775b0116-21ae-4427-8fa7-a4a7eadb290e_output_data_out_test:1
+
+  register:
+    type: command
+    component: azureml://registries/azureml/components/register_model/versions/0.0.21
+    compute: azureml:cpu-cluster
+    inputs:
+      model_path: ${{parent.jobs.train.outputs.model_output}}
+      model_name: got-house-dt

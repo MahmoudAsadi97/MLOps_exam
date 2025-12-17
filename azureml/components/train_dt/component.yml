@@ -1,0 +1,26 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandComponent.schema.json
+name: got_train_dt_native
+display_name: GOT Decision Tree Training (Azure Native Logging)
+type: command
+
+inputs:
+  train_ready:
+    type: mltable
+  test_ready:
+    type: mltable
+
+outputs:
+  model_output:
+    type: uri_folder
+
+environment:
+  conda_file: ../../environments/got_train_dt_env.yml
+  image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+
+code: .
+
+command: >
+  python training.py
+  --train_ready ${{inputs.train_ready}}
+  --test_ready ${{inputs.test_ready}}
+  --model_output ${{outputs.model_output}}

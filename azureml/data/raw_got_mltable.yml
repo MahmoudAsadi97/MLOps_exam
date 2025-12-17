@@ -1,0 +1,6 @@
+﻿$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+name: got-persona-raw
+version: 1
+type: mltable
+description: Raw Game of Thrones persona dataset converted from Excel and wrapped as MLTable
+path: ../../data/raw_mltable

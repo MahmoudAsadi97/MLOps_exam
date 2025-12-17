@@ -1,0 +1,13 @@
+$schema: https://azuremlschemas.azureedge.net/latest/pipelineJob.schema.json
+type: pipeline
+display_name: got-data-prep-pipeline
+
+jobs:
+  data_prep:
+    type: command
+    component: azureml:got_data_prep:1
+    compute: azureml:cpu-cluster
+    inputs:
+      input_folder:
+        type: mltable
+        path: azureml:got-persona-raw:1
